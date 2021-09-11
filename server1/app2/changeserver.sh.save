@@ -1,0 +1,5 @@
+mkdir ~/php_mariadb/app2/$1/backup
+docker run --rm --volumes-from "$1_pfe" -v ~/php_mariadb/app2/$1/backup:/backup ubuntu bash -c “cd /var/lib/mysql && tar cvf /backup/backup.tar .”
+  scp ~/php_mariadb/app2/$1/  nadirpfe@52.188.226.188:~/php_mariadb/app2/ 
+ssh  nadirpfe@52.188.226.188 docker volume create my_volume
+

@@ -1,0 +1,24 @@
+mkdir  ~/php_mariadb/app2/$1
+cd    ~/php_mariadb/app2/$1
+#mkdir web1
+cp -r    ~/php_mariadb/app2/web1  ~/php_mariadb/app2/$1/
+cp ~/php_mariadb/app2/docker-compose.yml   ~/php_mariadb/app2/$1/docker-compose.yml
+touch  ~/php_mariadb/app2/$1/.env
+touch ~/php_mariadb/app2/$1/backup.sh
+echo   "MYSQL_ROOT_PASSWORD=$6
+       MYSQL_DATABASE=$2
+        VIRTUAL_HOST=$3
+        LETSENCRYPT_HOST=$3
+        name=$1
+        email=$4
+        password=$5" > ~/php_mariadb/app2/$1/.env
+        echo "#!/usr/bin/env bash
+         #DOCKER=/usr/bin/docker
+       /usr/bin/docker  exec $1_mariadb_1 /usr/bin/mysqldump -u root --password=$6 $2 >~/php_mariadb/app2/$1/backup.sql">~/php_mariadb/app2/$1/backup.sh
+
+ cd   ~/php_mariadb/app2/$1
+ docker-compose  up  -d 
+crontab -l > ~/php_mariadb/app2/$1/jobs.txt
+sudo echo "* * * * * /bin/bash $HOME/php_mariadb/app2/$1/backup.sh" >> ~/php_mariadb/app2/$1/jobs.txt
+crontab jobs.txt
+rm  jobs.txt
