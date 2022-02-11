@@ -12,10 +12,6 @@ services:
       - letsencrypt-vhost-d:/etc/nginx/vhost.d
       - letsencrypt-html:/usr/share/nginx/html
       - acme:/etc/acme.sh
-    networks:
-       # - site1
-        - site2
- 
   letsencrypt-proxy:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-proxy
@@ -28,17 +24,13 @@ services:
     environment:
       - DEFAULT_EMAIL=hichemabderrahmene31@gmail.com
       - NGINX_PROXY_CONTAINER=nginx-proxy
-    networks:
-        - site1
-        - site2
+ 
  
 networks:
   site1:
     external:
      name: clientA
-  site2:
-    external:
-     name: clientB
+  
 volumes:
   letsencrypt-certs:
   letsencrypt-vhost-d:

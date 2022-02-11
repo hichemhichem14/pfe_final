@@ -13,7 +13,7 @@ $table = "clients";
 function getUsers()
 {
 global $db;
-    $sth = $db->query("SELECT id,client_name,client_email,sub_domain,db_name  FROM clients order by id DESC");
+    $sth = $db->query("SELECT id,client_name,client_email,sub_domain,db_name,server FROM clients order by id DESC");
 $result = $sth->fetchAll();
 return $result;
 }
@@ -42,15 +42,16 @@ function createUser($data)
 {try{
      global $db;
 //$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sth = $db->prepare('insert into clients(client_name,client_email,password,sub_domain,db_name,db_password) values(:client_name,:client_email,:password,:sub_domain,:db_name,:db_password)');
+    $sth = $db->prepare('insert into clients(client_name,client_email,password,sub_domain,db_name,db_password,server) values(:client_name,:client_email,:password,:sub_domain,:db_name,:db_password,:server)');
 //    $users = getUsers();
    //$sth->bind_param("ss", $data["password"], $data["db_password"]);
     //$data['id'] = rand(1000000, 2000000);
-     $sth->execute(['client_name'=>$data["client_name"],'client_email'=>$data["client_email"],'password'=>$data["password"],'sub_domain'=>$data["sub_domain"],'db_name'=>$data["db_name"],'db_password'=>$data["db_password"]]) or die(print_r($sth->errorInfo(), true));
+     $sth->execute(['client_name'=>$data["client_name"],'client_email'=>$data["client_email"],'password'=>$data["password"],'sub_domain'=>$data["sub_domain"],'db_name'=>$data["db_name"],'db_password'=>$data["db_password"],"server"=>$data["server"]]) or die(print_r($sth->errorInfo(), true));
      // $users[] = $data;
-    $output = shell_exec("/home/hichempfe/php_mariadb/app2/auto.sh $data['client_name'] $data['db_name'] $data['sub_domain'] $data['client_email'] $data['password'] $data['db_password']");
+     /*$output=*/shell_exec("/home/hichem/Desktop/pfe_final/server2/app2/auto.sh {$data['client_name']} {$data['db_name']} {$data['sub_domain']} {$data['client_email']} {$data['password']} {$data['db_password']} 2>&1");
     //putJson($users);
-
+ // return $output;
+   
     return $data;}
 catch(PDOException $e) { echo "Error: " . $e->getMessage(); }
 }

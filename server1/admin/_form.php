@@ -44,7 +44,11 @@
                     <input name="db_password" value="<?php echo $user['db_password'] ?>"
                            class="form-control  <?php /* echo $errors['email'] ? 'is-invalid' : '' */?>">
                 </div>
-                
+                <div class="form-group">
+                    <label>server</label>
+                    <input name="server" value="<?php echo $user['server'] ?>"
+                           class="form-control <?php /*echo $errors['username'] ? 'is-invalid' : ''*/ ?>">
+                </div>
                 <button class="btn btn-success">Submit</button>
             </form>
             </div>

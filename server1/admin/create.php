@@ -30,7 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     //if ($isValid) {
         $user = createUser($_POST);
-
+       // echo $user ;
+        //exit();
       //  uploadImage($_FILES['picture'], $user);
 
         header("Location: index.php");
